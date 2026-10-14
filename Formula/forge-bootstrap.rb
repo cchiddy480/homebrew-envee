@@ -4,7 +4,7 @@ class ForgeBootstrap < Formula
   desc "Create a verified development environment from an empty directory"
   homepage "https://github.com/cchiddy480/forge-bootstrap"
   url "https://github.com/cchiddy480/forge-bootstrap/releases/download/v0.1.0/forge_bootstrap-0.1.0.tar.gz"
-  sha256 "19360d73e96de8ffdd2b827b8ef9215542d28d8138f25498c98390024c2bdfea"
+  sha256 "b5dd03de4c735a2a71e417e08ca31432eb809fd6c2b4dbee926985fc51b10d8f"
   license "MIT"
 
   depends_on "python@3.14"
