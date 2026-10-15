@@ -4,7 +4,7 @@ class Envee < Formula
   desc "Create a verified development environment from an empty directory"
   homepage "https://github.com/cchiddy480/envee"
   url "https://github.com/cchiddy480/envee/releases/download/v0.2.0/envee-0.2.0.tar.gz"
-  sha256 "fa3cedb0589e8b0cb5ccfc6b95d8231e0d38b6d68f76156cde1e54c6b49a25ef"
+  sha256 "5794ec862873e16c8ad84a957809085bb49404c9aeb97bd276ee50afe57fdd1b"
   license "MIT"
 
   depends_on "python@3.14"
