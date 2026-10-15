@@ -1,10 +1,10 @@
-class ForgeBootstrap < Formula
+class Envee < Formula
   include Language::Python::Virtualenv
 
   desc "Create a verified development environment from an empty directory"
-  homepage "https://github.com/cchiddy480/forge-bootstrap"
-  url "https://github.com/cchiddy480/forge-bootstrap/releases/download/v0.1.0/forge_bootstrap-0.1.0.tar.gz"
-  sha256 "b5dd03de4c735a2a71e417e08ca31432eb809fd6c2b4dbee926985fc51b10d8f"
+  homepage "https://github.com/cchiddy480/envee"
+  url "https://github.com/cchiddy480/envee/releases/download/v0.2.0/envee-0.2.0.tar.gz"
+  sha256 "fa3cedb0589e8b0cb5ccfc6b95d8231e0d38b6d68f76156cde1e54c6b49a25ef"
   license "MIT"
 
   depends_on "python@3.14"
@@ -36,27 +36,27 @@ class ForgeBootstrap < Formula
 
   def install
     virtualenv_install_with_resources
-    generate_completions_from_executable(bin/"forge", shell_parameter_format: :click)
+    generate_completions_from_executable(bin/"envee", shell_parameter_format: :click)
   end
 
   def caveats
     <<~EOS
-      Start a project: forge init ./my-project
-      Check your tools: forge doctor
+      Start a project: envee init ./my-project
+      Check your tools: envee doctor
 
-      Forge includes its own Python environment. Node 22, Docker and Azure
+      Envee includes its own Python environment. Node 22, Docker and Azure
       Functions Core Tools are needed only for the project types you select.
     EOS
   end
 
   test do
-    assert_match version.to_s, shell_output("#{bin}/forge --version")
-    system bin/"forge", "init", "sample", "--preset", "python", "--yes", "--no-install", "--no-git"
-    assert_path_exists testpath/"sample/forge.json"
+    assert_match version.to_s, shell_output("#{bin}/envee --version")
+    system bin/"envee", "init", "sample", "--preset", "python", "--yes", "--no-install", "--no-git"
+    assert_path_exists testpath/"sample/envee.json"
     assert_path_exists testpath/"sample/scripts/project.py"
-    manifest = JSON.parse((testpath/"sample/forge.json").read)
+    manifest = JSON.parse((testpath/"sample/envee.json").read)
     assert_equal "python", manifest["preset"]
     assert_equal "local", manifest["environment"]
-    assert_match "must be empty", shell_output("#{bin}/forge init sample --yes 2>&1", 1)
+    assert_match "must be empty", shell_output("#{bin}/envee init sample --yes 2>&1", 1)
   end
 end

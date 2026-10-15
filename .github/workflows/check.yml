@@ -9,10 +9,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Register checked-out formula
         run: |
-          brew tap --custom-remote cchiddy480/forge "$GITHUB_WORKSPACE"
-          brew trust --formula cchiddy480/forge/forge-bootstrap
-      - run: brew install cchiddy480/forge/forge-bootstrap --build-from-source --no-ask
+          brew tap --custom-remote cchiddy480/envee "$GITHUB_WORKSPACE"
+          brew trust --formula cchiddy480/envee/envee
+      - run: brew install cchiddy480/envee/envee --build-from-source --no-ask
         env:
           HOMEBREW_NO_AUTO_UPDATE: '1'
-      - run: brew test cchiddy480/forge/forge-bootstrap
-      - run: forge doctor --preset python
+      - run: brew test cchiddy480/envee/envee
+      - run: envee doctor --preset python

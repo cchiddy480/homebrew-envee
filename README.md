@@ -1,14 +1,14 @@
-# Forge Homebrew tap
+# Envee Homebrew tap
 
-Install the Forge development environment CLI:
+Install the Envee development environment CLI:
 
 ```sh
-brew install cchiddy480/forge/forge-bootstrap
-forge init ./my-project
+brew install cchiddy480/envee/envee
+envee init ./my-project
 ```
 
-Homebrew installs Python and an isolated Forge environment. Project runtimes depend on your selected preset.
+Homebrew installs Python and an isolated Envee environment. Project runtimes depend on your selected preset.
 
-Update with `brew update && brew upgrade forge-bootstrap`. Uninstall with `brew uninstall forge-bootstrap`; generated projects remain untouched.
+Update with `brew update && brew upgrade envee`. Uninstall with `brew uninstall envee`; generated projects remain untouched.
 
-Source and releases: https://github.com/cchiddy480/forge-bootstrap
+Source and releases: https://github.com/cchiddy480/envee
