@@ -5,7 +5,11 @@ Install the Envee development environment CLI:
 ```sh
 brew install cchiddy480/envee/envee
 envee init ./my-project
+envee dev ./my-project
 ```
+
+Run `envee` inside a project to start, check, diagnose or retry setup.
+`envee config` manages remembered optional AI-tool preferences.
 
 Homebrew installs Python and an isolated Envee environment. Project runtimes depend on your selected preset.
 

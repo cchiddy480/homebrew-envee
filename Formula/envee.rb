@@ -1,10 +1,10 @@
 class Envee < Formula
   include Language::Python::Virtualenv
 
-  desc "Create a verified development environment from an empty directory"
+  desc "Set up projects and start development reliably"
   homepage "https://github.com/cchiddy480/envee"
-  url "https://github.com/cchiddy480/envee/releases/download/v0.2.0/envee-0.2.0.tar.gz"
-  sha256 "5794ec862873e16c8ad84a957809085bb49404c9aeb97bd276ee50afe57fdd1b"
+  url "https://github.com/cchiddy480/envee/releases/download/v0.3.0/envee-0.3.0.tar.gz"
+  sha256 "64c9376e87009e263b0ff6929ca68213e2440cd2d20c6e480c1f5c484c60ae36"
   license "MIT"
 
   depends_on "python@3.14"
@@ -41,7 +41,8 @@ class Envee < Formula
 
   def caveats
     <<~EOS
-      Start a project: envee init ./my-project
+      Start or return to a project: envee
+      Create a project: envee init ./my-project
       Check your tools: envee doctor
 
       Envee includes its own Python environment. Node 22, Docker and Azure
@@ -50,13 +51,21 @@ class Envee < Formula
   end
 
   test do
+    ENV["XDG_CONFIG_HOME"] = (testpath/"config").to_s
     assert_match version.to_s, shell_output("#{bin}/envee --version")
+    system bin/"envee", "config", "--no-codegraph", "--no-ponytail"
+    assert_path_exists testpath/"config/envee/config.json"
     system bin/"envee", "init", "sample", "--preset", "python", "--yes", "--no-install", "--no-git"
     assert_path_exists testpath/"sample/envee.json"
     assert_path_exists testpath/"sample/scripts/project.py"
     manifest = JSON.parse((testpath/"sample/envee.json").read)
     assert_equal "python", manifest["preset"]
     assert_equal "local", manifest["environment"]
+    assert_equal false, manifest["codegraph"]
+    assert_equal false, manifest["ponytail"]
+    cd testpath/"sample/app" do
+      assert_match "Prerequisites available", shell_output("#{bin}/envee doctor")
+    end
     assert_match "must be empty", shell_output("#{bin}/envee init sample --yes 2>&1", 1)
   end
 end
