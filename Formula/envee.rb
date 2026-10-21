@@ -1,10 +1,10 @@
 class Envee < Formula
   include Language::Python::Virtualenv
 
-  desc "Set up projects and start development reliably"
+  desc "Save setups and start development reliably"
   homepage "https://github.com/cchiddy480/envee"
-  url "https://github.com/cchiddy480/envee/releases/download/v0.3.0/envee-0.3.0.tar.gz"
-  sha256 "64c9376e87009e263b0ff6929ca68213e2440cd2d20c6e480c1f5c484c60ae36"
+  url "https://github.com/cchiddy480/envee/releases/download/v0.4.0/envee-0.4.0.tar.gz"
+  sha256 "e2d73cf00afb4e49912dec734df277f20924b2b43c62fb6c2fdc31c4bab8f3bd"
   license "MIT"
 
   depends_on "python@3.14"
@@ -61,11 +61,16 @@ class Envee < Formula
     manifest = JSON.parse((testpath/"sample/envee.json").read)
     assert_equal "python", manifest["preset"]
     assert_equal "local", manifest["environment"]
+    assert_equal 2, manifest["schema"]
     assert_equal false, manifest["codegraph"]
     assert_equal false, manifest["ponytail"]
     cd testpath/"sample/app" do
-      assert_match "Prerequisites available", shell_output("#{bin}/envee doctor")
+      assert_match "Missing Python lock", shell_output("#{bin}/envee doctor 2>&1", 1)
     end
+    system bin/"envee", "recipe", "save", "team", "sample", "--output", "team.json"
+    system bin/"envee", "init", "from-recipe", "--recipe", "./team.json", "--yes", "--no-install"
+    assert_path_exists testpath/"from-recipe/envee.json"
+    assert_match "Missing Python lock", shell_output("#{bin}/envee lock sample --check 2>&1", 1)
     assert_match "must be empty", shell_output("#{bin}/envee init sample --yes 2>&1", 1)
   end
 end
